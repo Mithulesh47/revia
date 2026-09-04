@@ -1,5 +1,7 @@
-package com.revia.identity;
+package com.revia.identity.entity;
 
+import com.revia.identity.Role;
+import com.revia.identity.UserStatus;
 import jakarta.persistence.*;
 
 import java.time.Instant;
@@ -19,11 +21,13 @@ public class User {
     @Column(name = "password_hash", nullable = false)
     private String passwordHash;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
-    private String role;
+    private Role role;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    private String status;
+    private UserStatus status;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
@@ -63,19 +67,19 @@ public class User {
         this.passwordHash = passwordHash;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
-    public String getStatus() {
+    public UserStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(UserStatus status) {
         this.status = status;
     }
 

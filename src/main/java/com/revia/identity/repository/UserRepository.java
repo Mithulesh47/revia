@@ -1,5 +1,6 @@
-package com.revia.identity;
+package com.revia.identity.repository;
 
+import com.revia.identity.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;

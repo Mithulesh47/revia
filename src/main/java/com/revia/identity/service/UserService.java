@@ -1,5 +1,9 @@
-package com.revia.identity;
+package com.revia.identity.service;
 
+import com.revia.identity.Role;
+import com.revia.identity.entity.User;
+import com.revia.identity.repository.UserRepository;
+import com.revia.identity.UserStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,7 +17,11 @@ public class UserService {
     }
 
     @Transactional
-    public User createUser(String email, String passwordHash, String role, String status) {
+    public User createUser(
+            String email,
+            String passwordHash,
+            Role role,
+            UserStatus status) {
 
         if (userRepository.existsByEmail(email)) {
             throw new IllegalArgumentException("Email already exists");

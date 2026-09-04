@@ -1,6 +1,10 @@
-package com.revia.identity;
+package com.revia.identity.dto;
+
+import com.revia.identity.Role;
+import com.revia.identity.UserStatus;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public record CreateUserRequest(
 
@@ -11,11 +15,11 @@ public record CreateUserRequest(
         @NotBlank
         String passwordHash,
 
-        @NotBlank
-        String role,
+        @NotNull
+        Role role,
 
-        @NotBlank
-        String status
+        @NotNull
+        UserStatus status
 
 ) {
 }
