@@ -2,8 +2,9 @@ package com.revia.identity.service;
 
 import com.revia.identity.Role;
 import com.revia.identity.entity.User;
-import com.revia.identity.repository.UserRepository;
 import com.revia.identity.UserStatus;
+import com.revia.identity.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,15 +12,20 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(
+            UserRepository userRepository,
+            PasswordEncoder passwordEncoder) {
+
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional
     public User createUser(
             String email,
-            String passwordHash,
+            String password,
             Role role,
             UserStatus status) {
 
@@ -28,8 +34,12 @@ public class UserService {
         }
 
         User user = new User();
+
         user.setEmail(email);
-        user.setPasswordHash(passwordHash);
+
+        // Never store the plaintext password.
+        user.setPasswordHash(passwordEncoder.encode(password));
+
         user.setRole(role);
         user.setStatus(status);
 

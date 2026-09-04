@@ -1,7 +1,7 @@
 package com.revia.identity.controller;
 
-import com.revia.identity.dto.CreateUserRequest;
 import com.revia.identity.entity.User;
+import com.revia.identity.dto.CreateUserRequest;
 import com.revia.identity.dto.UserResponse;
 import com.revia.identity.service.UserService;
 import jakarta.validation.Valid;
@@ -25,7 +25,7 @@ public class UserController {
 
         User user = userService.createUser(
                 request.email(),
-                request.passwordHash(),
+                request.password(),
                 request.role(),
                 request.status()
         );
