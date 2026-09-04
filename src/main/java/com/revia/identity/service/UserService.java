@@ -1,12 +1,14 @@
 package com.revia.identity.service;
 
 import com.revia.identity.Role;
-import com.revia.identity.entity.User;
 import com.revia.identity.UserStatus;
+import com.revia.identity.entity.User;
 import com.revia.identity.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -36,13 +38,18 @@ public class UserService {
         User user = new User();
 
         user.setEmail(email);
-
-        // Never store the plaintext password.
         user.setPasswordHash(passwordEncoder.encode(password));
-
         user.setRole(role);
         user.setStatus(status);
 
         return userRepository.save(user);
+    }
+
+    @Transactional(readOnly = true)
+    public User getUserById(UUID userId) {
+
+        return userRepository.findById(userId)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("User not found"));
     }
 }
